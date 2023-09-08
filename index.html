@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Simple Calculator</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-        <link href="styles.css" rel="stylesheet">
-    </head>
 
-    <body>
-        <h3>Press c to clear the screen</h3>
-        <h3>Refresh or Press w to see the Welcome message</h3>
-        <div class="flex-container">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <h3>Press AC to clear the screen</h3>
+    <h3>Refresh to see the Welcome message</h3>
+    <div class="flex-container">
         <div class="grid-container">
-            <div class="output"><h1>Welcome</h1></div>
+            <div class="output"><h1></h1></div>
+            <div class="input-field"><input value="Welcome"></div>
+            <div><button type="button" class="btn btn-secondary">CE</button></div>
+            <div><button type="button" class="btn btn-secondary">AC</button></div>
             <div><button type="button" class="btn btn-secondary" id="seven">7</button></div>
             <div><button type="button" class="btn btn-secondary" id="eight">8</button></div>
             <div><button type="button" class="btn btn-secondary" id="nine">9</button></div>
             <div><button type="button" class="btn btn-secondary">➗</button></div>
             <div><button type="button" class="btn btn-secondary" id="four">4</button></div>
             <div><button type="button" class="btn btn-secondary" id="five">5</button></div>
-            <div><button type="button" class="btn btn-secondary" is="six">6</button></div>
+            <div><button type="button" class="btn btn-secondary" id="six">6</button></div>
             <div><button type="button" class="btn btn-secondary">✖️</button></div>
             <div><button type="button" class="btn btn-secondary" id="one">1</button></div>
             <div><button type="button" class="btn btn-secondary" id="two">2</button></div>
@@ -30,9 +35,10 @@
             <div><button type="button" class="btn btn-primary">=</button></div>
             <div><button type="button" class="btn btn-secondary">➕</button></div>
         </div>
-        </div>
+    </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-        <script src="index.js" charset="UTF-8"></script>
-    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="index.js" charset="UTF-8"></script>
+</body>
+
 </html>
