@@ -1,17 +1,41 @@
 var inputNumber=[];
+var temp="";
 var operator;
 var count;
+var keys=["0","1","2","3","4","5","6","7","8","9",".","/","*","+","-","Backspace"];
 setArray(0);
 
-$(document).on("keydown",function(event) {
+$("input").on("click", function() {
+    var a=$("input").val();
+    if (a==="Welcome") {
+        clearScreen();
+    }
+})
+$("input").on("keydown", function(event) {
+    var myInput=event.key;
+    if (keys.includes(myInput)) {
+        handler(myInput,"input");
+    }
+    else {
+        event.preventDefault();
+    }
+})
+$(document).on("keydown", function(event) {
     var inputByKey=event.key;
-    handler(inputByKey);
+    handler2(inputByKey);
 });
 $("button").on("click", function() {
     var inputByScreen=this.innerHTML;
-    handler(inputByScreen);
+    handler(inputByScreen,"button");
+    handler2(inputByScreen);
 });
 
+function clearScreen() {
+    $("input").val("");
+}
+function messageDisplay(input) {
+    $("input").val(input);
+}
 function setArray(len) {
     count=len;
     for (i=len;i<3;i++) {
@@ -22,14 +46,14 @@ function setNum(input) {
     inputNumber[count]+=input;
 }
 function delNum() {
-    var temp=inputNumber[count].slice(0,inputNumber[count].length-1);
-    inputNumber[count]=temp;
-    printNum();
+    temp=temp.slice(0,temp.length-1);
+    var mine=inputNumber[count].slice(0,inputNumber[count].length-1);
+    inputNumber[count]=mine;
 }
-function printNum() {
-    $("h1").text(inputNumber[count]);
+function printOp(msg) {
+    $("h1").text(msg);
 }
-function printOp(op,sign) {
+function setOp(op,sign,inputType) {
     count++;
     if (count>2) {
         calculator();
@@ -37,42 +61,61 @@ function printOp(op,sign) {
     setArray(1);
     operator=op;
     setNum(sign);
-    $("h1").text(sign);
+    if (inputType==="button") {
+        messageDisplay(temp);
+    }
     count++;
 }
-function handler(input) {
-    switch (input) {
-        case "0": case "1": case "2": case "3": case "4": case "5": case "6": case "7": case "8": case "9": case ".":
-            setNum(input);
-            printNum();
-            break;
-        case "/": case "➗":
-            printOp(div,"➗");
-            break;
-        case "*": case "✖️":
-            printOp(mul,"✖️");
-            break;
-        case "-": case "➖":
-            printOp(sub,"➖");
-            break;
-        case "+": case "➕":
-            printOp(add,"➕");
-            break;
-        case "c": case "C":
+function handler2(input) {
+    switch(input) {
+        case "c": case "C": case "AC":
+            clearScreen();
             setArray(0);
-            printNum();
+            printOp("");
+            temp="";
             break;
-        case "Backspace":
+        case "Backspace": case "CE":
             delNum();
+            messageDisplay(temp);
             break;
         case "Enter": case "=":
             calculator();
             setArray(0);
+            temp="";
+            messageDisplay(temp);
             break;
-        case "w": case "W":
+        case "w": case "W": case "AC":
             setArray(0);
             operator=null;
-            $("h1").text("Welcome");
+            messageDisplay("Welcome");
+            temp="";
+            break;
+    }
+}
+function handler(input,inputType) {
+    switch (input) {
+        case "0": case "1": case "2": case "3": case "4": case "5": case "6": case "7": case "8": case "9": case ".":
+            setNum(input);
+            if (inputType==="button") {
+                temp+=input;
+                messageDisplay(temp);
+            }
+            break;
+        case "/": case "➗":
+            temp+=input;
+            setOp(div,"➗",inputType);
+            break;
+        case "*": case "✖️":
+            temp+=input;
+            setOp(mul,"✖️",inputType);
+            break;
+        case "-": case "➖":
+            temp+=input;
+            setOp(sub,"➖",inputType);
+            break;
+        case "+": case "➕":
+            temp+=input;
+            setOp(add,"➕",inputType);
             break;
     }
 }
@@ -88,9 +131,7 @@ function calculator() {
         setArray(0);
         inputNumber[count]=String(answer);
     }
-    else {
-        $("h1").text(answer);
-    }
+    printOp(answer);
 }
 function main(op,n1,n2) {
     return op(n1,n2);
