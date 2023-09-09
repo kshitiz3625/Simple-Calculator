@@ -1,9 +1,6 @@
-var inputNumber=[];
 var temp="";
-var operator;
-var count;
-var keys=["0","1","2","3","4","5","6","7","8","9",".","/","*","+","-","Backspace"];
-setArray(0);
+var temp2="";
+var keys=["0","1","2","3","4","5","6","7","8","9","."];
 
 $("input").on("click", function() {
     var a=$("input").val();
@@ -36,115 +33,71 @@ function clearScreen() {
 function messageDisplay(input) {
     $("input").val(input);
 }
-function setArray(len) {
-    count=len;
-    for (i=len;i<3;i++) {
-        inputNumber[i]="";
-    }
-}
-function setNum(input) {
-    inputNumber[count]+=input;
-}
-function delNum() {
-    temp=temp.slice(0,temp.length-1);
-    var mine=inputNumber[count].slice(0,inputNumber[count].length-1);
-    inputNumber[count]=mine;
-}
 function printOp(msg) {
     $("h1").text(msg);
 }
-function setOp(op,sign,inputType) {
-    count++;
-    if (count>2) {
-        calculator();
-    }
-    setArray(1);
-    operator=op;
-    setNum(sign);
-    if (inputType==="button") {
-        messageDisplay(temp);
-    }
-    count++;
+function tempValue() {
+    temp="";
+    temp2=temp;
+}
+function delNum() {
+    temp=temp.slice(0,temp.length-1);
+    temp2=temp2.slice(0,temp2.length-1);
+    messageDisplay(temp2);
 }
 function handler2(input) {
     switch(input) {
+        case "/": case "➗":
+            temp+="/";
+            temp2+="➗";
+            messageDisplay(temp2);
+            break;
+        case "*": case "✖️":
+            temp+="*";
+            temp2+="✖️";
+            messageDisplay(temp2);
+            break;
+        case "-": case "➖":
+            temp+="-";
+            temp2+="➖";
+            messageDisplay(temp2);
+            break;
+        case "+": case "➕":
+            temp+="+";
+            temp2+="➕";
+            messageDisplay(temp2);
+            break;
         case "c": case "C": case "AC":
             clearScreen();
-            setArray(0);
             printOp("");
-            temp="";
+            tempValue();
             break;
         case "Backspace": case "CE":
             delNum();
-            messageDisplay(temp);
             break;
         case "Enter": case "=":
             calculator();
-            setArray(0);
-            temp="";
-            messageDisplay(temp);
+            tempValue();
             break;
         case "w": case "W": case "AC":
-            setArray(0);
-            operator=null;
             messageDisplay("Welcome");
-            temp="";
+            tempValue();
             break;
     }
 }
 function handler(input,inputType) {
     switch (input) {
         case "0": case "1": case "2": case "3": case "4": case "5": case "6": case "7": case "8": case "9": case ".":
-            setNum(input);
+            temp+=input;
+            temp2+=input;
             if (inputType==="button") {
-                temp+=input;
-                messageDisplay(temp);
+                messageDisplay(temp2);
             }
-            break;
-        case "/": case "➗":
-            temp+=input;
-            setOp(div,"➗",inputType);
-            break;
-        case "*": case "✖️":
-            temp+=input;
-            setOp(mul,"✖️",inputType);
-            break;
-        case "-": case "➖":
-            temp+=input;
-            setOp(sub,"➖",inputType);
-            break;
-        case "+": case "➕":
-            temp+=input;
-            setOp(add,"➕",inputType);
             break;
     }
 }
 function calculator() {
-    var firstNumber=inputNumber[0];
-    var secondNumber=inputNumber[2];
-    var n1=Number(firstNumber);
-    var n2=Number(secondNumber);
-    var answer=main(operator,n1,n2);
-    answer=+answer.toFixed(2);   
-    console.log(inputNumber);
-    if (count>2) {
-        setArray(0);
-        inputNumber[count]=String(answer);
-    }
+    var answer=eval(temp);
+    answer=+answer.toFixed(2);
     printOp(answer);
-}
-function main(op,n1,n2) {
-    return op(n1,n2);
-}
-function mul(n1,n2) {
-    return n1*n2;
-}
-function div(n1,n2) {
-    return n1/n2;
-}
-function add(n1,n2) {
-    return n1+n2;
-}
-function sub(n1,n2) {
-    return n1-n2;
 }
