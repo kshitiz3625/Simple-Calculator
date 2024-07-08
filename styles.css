@@ -1,3 +1,6 @@
+body {
+    background-color: #D3D3D3;
+}
 .flex-container {
     display: flex;
     justify-content: center;
